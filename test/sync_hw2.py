@@ -1,27 +1,16 @@
 """
 Synchronize homework files (either save files to google drive or copy files from github/google drive) 
 """
+import os
+from os import path
 from shutil import copyfile
-# from urllib2 import urlopen
-import wget
-
-# def download(url, file_path):
-#     response = urlopen(url, file_path)
-#     data = response.read()
-#     txt_str = str(data)
-#     lines = txt_str.split("\\n")
-#     fx = open(file_path,"w")
-#     for line in lines:
-#         fx.write(line+ "\n")
-#     fx.close()
+import urllib.request
 
 def sync_hw2():
   if 'google.colab' in str(get_ipython()):
     from google.colab import drive
     drive.mount('/content/drive')
 
-    import os
-    from os import path
     # Save files from Colab to Google drive
     if path.exists("quadrotor.py"):
       if not path.exists("drive/My Drive/MEAM517_colab/hw2"):
@@ -48,10 +37,10 @@ def sync_hw2():
         # !curl -s https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/quadrotor_generator.py > quadrotor_generator.py
         # !curl -s https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/quad_sim.py > quad_sim.py
         # !curl -s https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/trajectories.py > trajectories.py
-        wget.download("https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/quadrotor.py", "quadrotor.py")
-        wget.download("https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/quadrotor_generator.py", "quadrotor_generator.py")
-        wget.download("https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/quad_sim.py", "quad_sim.py")
-        wget.download("https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/trajectories.py", "trajectories.py")
+        urllib.request.urlretrieve("https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/quadrotor.py", "quadrotor.py")
+        urllib.request.urlretrieve("https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/quadrotor_generator.py", "quadrotor_generator.py")
+        urllib.request.urlretrieve("https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/quad_sim.py", "quad_sim.py")
+        urllib.request.urlretrieve("https://raw.githubusercontent.com/yminchen/MEAM517_Colab/test/test/trajectories.py", "trajectories.py")
         # copy the new scripts to hw folder in google drive
         # !cp quadrotor.py drive/My\ Drive/MEAM517_colab/hw2/quadrotor.py
         # !cp quadrotor_generator.py drive/My\ Drive/MEAM517_colab/hw2/quadrotor_generator.py
